@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul class="nav-bar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="rsvp.html">RSVP</a></li>
+      <li><a href="schedule.html">Schedule</a></li>
+      <li><a href="registry.html">Registry</a></li>
+      <li><a href="hotels.html">Hotels</a></li>
+      <li><a href="things-to-do.html">Things to Do</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>RSVP</h1>
+    <div id="lookup">
+      <label for="guestName">Enter your name:</label>
+      <input type="text" id="guestName">
+      <button onclick="findGuest()">Find My Invitation</button>
+      <p id="lookupResult"></p>
+    </div>
+
+    <form id="rsvpForm" style="display:none;" onsubmit="submitRSVP(event)">
+      <div id="guestOptions"></div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required><br>
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone"><br>
+      <button type="submit">Submit RSVP</button>
+    </form>
+
+    <script src="script.js"></script>
+  </main>
+</body>
+</html>

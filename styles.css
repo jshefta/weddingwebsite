@@ -1,0 +1,187 @@
+/* === Global Theme Variables === */
+:root {
+  --font-family: 'Helvetica Neue', sans-serif;
+  --color-background: #000000;
+  --color-primary: #de1808;
+  --color-primary-dark: #b01406;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #f8f8f8;
+  --color-text: #333333;
+  --color-border: #dddddd;
+  --color-table-border: #eeeeee;
+}
+
+/* === Base Styles === */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  color: var(--color-white);
+}
+
+nav {
+  background-color: var(--color-gray);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav-bar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.nav-bar li a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+/* === Hotel List Section === */
+.hotel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.hotel {
+  display: flex;
+  background: var(--color-white);
+  overflow: hidden;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.hotel-img {
+  width: 400px;
+  object-fit: cover;
+}
+
+.hotel-info {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-black);
+}
+
+.hotel-cta {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: bold;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+
+.hotel-cta:hover {
+  background: var(--color-primary-dark);
+}
+
+/* === Schedule Table === */
+.schedule-table {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  background: var(--color-white);
+  color: var(--color-text);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-table-border);
+  text-align: left;
+}
+
+.schedule-table th {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.schedule-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* === Event List Section === */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.event {
+  background: var(--color-white);
+  color: var(--color-text);
+  padding: 2rem;
+  text-align: center;
+}
+
+.event h2 {
+  color: var(--color-primary);
+  margin-top: 0;
+}
+
+.hotel-description {
+  max-width: 800px;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 700px) {
+  .hotel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hotel-img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .hotel-info {
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-bar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    padding: 1rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+}

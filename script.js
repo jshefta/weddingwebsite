@@ -1,4 +1,34 @@
 
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburgerMenu = document.getElementById('hamburgerMenu');
+  const navBar = document.getElementById('navBar');
+  
+  if (hamburgerMenu && navBar) {
+    hamburgerMenu.addEventListener('click', function() {
+      hamburgerMenu.classList.toggle('active');
+      navBar.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = navBar.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        hamburgerMenu.classList.remove('active');
+        navBar.classList.remove('active');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!hamburgerMenu.contains(event.target) && !navBar.contains(event.target)) {
+        hamburgerMenu.classList.remove('active');
+        navBar.classList.remove('active');
+      }
+    });
+  }
+});
+
 const AIRTABLE_BASE_ID = "appwvJpPa39Qg9LDh";
 const AIRTABLE_TABLE_NAME = "Guests";
 const AIRTABLE_TOKEN = "patacrtltldFchKGR.b8dd1ae7be19e4b9cff95bbe8fd4b614faf6f0dafbc50e17ed513be2f2743d45";

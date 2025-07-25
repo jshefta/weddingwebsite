@@ -231,7 +231,7 @@ async function confirmAndSubmit() {
     id: matchedParty.recordIds[name],
     fields: {
       "Attending": currentRSVPData.responses[name],
-      "Responded": "YES"
+      "Responded": "Yes"
     }
   }));
 

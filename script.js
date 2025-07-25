@@ -227,11 +227,11 @@ async function confirmAndSubmit() {
   console.log("🔍 Debug: Matched Party:", matchedParty);
 
   // Create records array for PATCH request (updating existing records)
-  // Let's start with just the Attending field to test
   const records = matchedParty.partyNames.map(name => ({
     id: matchedParty.recordIds[name],
     fields: {
-      "Attending": currentRSVPData.responses[name]
+      "Attending": currentRSVPData.responses[name],
+      "Responded": "YES"
     }
   }));
 

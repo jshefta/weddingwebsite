@@ -185,16 +185,16 @@ async function confirmAndSubmit() {
   console.log("🔍 Debug: Matched Party:", matchedParty);
 
   // Create records array for PATCH request (updating existing records)
+  // Let's start with just the Attending field to test
   const records = matchedParty.partyNames.map(name => ({
     id: matchedParty.recordIds[name],
     fields: {
-      "Attending": currentRSVPData.responses[name],
-      "Phone": currentRSVPData.phone,
-      "Plus One Name": currentRSVPData.plusOneName
+      "Attending": currentRSVPData.responses[name]
     }
   }));
 
   console.log("🔍 Debug: Records to update:", records);
+  console.log("🔍 Debug: Request body:", JSON.stringify({ records }, null, 2));
 
   try {
     console.log("🔍 Debug: Making PATCH request to:", AIRTABLE_ENDPOINT);

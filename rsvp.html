@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RSVP</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script> <!-- Make sure this matches your JS filename -->
 </head>
 <body>
   <nav>
@@ -29,14 +30,24 @@
 
     <form id="rsvpForm" style="display:none;" onsubmit="submitRSVP(event)">
       <div id="guestOptions"></div>
+
+      <div id="plusOneContainer" style="display:none;">
+        <label for="plusOneName">Plus One Name:</label>
+        <input type="text" id="plusOneName" name="plusOneName">
+      </div>
+
       <label for="email">Email:</label>
       <input type="email" id="email" required><br>
       <label for="phone">Phone:</label>
       <input type="tel" id="phone"><br>
       <button type="submit">Submit RSVP</button>
     </form>
-
-    <script src="script.js"></script>
   </main>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      loadGuestList();
+    });
+  </script>
 </body>
 </html>

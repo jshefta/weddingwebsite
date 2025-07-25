@@ -7,6 +7,7 @@ const AIRTABLE_ENDPOINT = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIR
 
 let guestList = [];
 let matchedParty = null;
+let currentRSVPData = null;
 
 async function loadGuestList() {
   try {
@@ -82,17 +83,80 @@ function findGuest() {
   }
 }
 
-async function submitRSVP(event) {
+
+
+function showConfirmation(event) {
   event.preventDefault();
+  
   const formData = new FormData(document.getElementById('rsvpForm'));
+  currentRSVPData = {
+    partyId: matchedParty.partyId,
+    partyNames: matchedParty.partyNames,
+    plusOneAllowed: matchedParty.plusOneAllowed,
+    plusOneName: formData.get("plusOneName") || "",
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    responses: {}
+  };
+
+  // Collect responses for each guest
+  matchedParty.partyNames.forEach(name => {
+    currentRSVPData.responses[name] = formData.get(name);
+  });
+
+  // Display confirmation details
+  const confirmationDetails = document.getElementById('confirmationDetails');
+  let detailsHTML = '<div class="confirmation-summary">';
+  
+  // Guest responses
+  detailsHTML += '<h3>Guest Responses:</h3>';
+  matchedParty.partyNames.forEach(name => {
+    const response = currentRSVPData.responses[name];
+    const statusClass = response === 'Yes' ? 'attending' : 'not-attending';
+    detailsHTML += `<p><strong>${name}:</strong> <span class="${statusClass}">${response}</span></p>`;
+  });
+
+  // Plus one information
+  if (matchedParty.plusOneAllowed && currentRSVPData.plusOneName) {
+    detailsHTML += `<p><strong>Plus One:</strong> ${currentRSVPData.plusOneName}</p>`;
+  }
+
+  // Contact information
+  detailsHTML += '<h3>Contact Information:</h3>';
+  detailsHTML += `<p><strong>Email:</strong> ${currentRSVPData.email}</p>`;
+  if (currentRSVPData.phone) {
+    detailsHTML += `<p><strong>Phone:</strong> ${currentRSVPData.phone}</p>`;
+  }
+
+  detailsHTML += '</div>';
+
+  confirmationDetails.innerHTML = detailsHTML;
+
+  // Show confirmation screen, hide form
+  document.getElementById('rsvpForm').style.display = 'none';
+  document.getElementById('confirmationScreen').style.display = 'block';
+}
+
+function editRSVP() {
+  // Hide confirmation screen, show form
+  document.getElementById('confirmationScreen').style.display = 'none';
+  document.getElementById('rsvpForm').style.display = 'block';
+}
+
+async function confirmAndSubmit() {
+  if (!currentRSVPData) {
+    alert("No RSVP data to submit. Please try again.");
+    return;
+  }
+
   const records = matchedParty.partyNames.map(name => ({
     fields: {
-      "Party ID": matchedParty.partyId,
+      "Party ID": currentRSVPData.partyId,
       "Name": name,
-      "Attending": formData.get(name),
-      "Phone": formData.get("phone"),
-      "Plus One?": matchedParty.plusOneAllowed ? true : false,
-      "Plus One Name": matchedParty.plusOneAllowed ? formData.get("plusOneName") : ""
+      "Attending": currentRSVPData.responses[name],
+      "Phone": currentRSVPData.phone,
+      "Plus One?": currentRSVPData.plusOneAllowed ? true : false,
+      "Plus One Name": currentRSVPData.plusOneName
     }
   }));
 
@@ -108,9 +172,26 @@ async function submitRSVP(event) {
 
     const result = await response.json();
     console.log("✅ RSVP submitted:", result);
-    alert("Thank you for your RSVP!");
+    
+    // Show success message
+    document.getElementById('confirmationScreen').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'block';
   } catch (error) {
     console.error("❌ Failed to submit RSVP:", error);
     alert("There was an error submitting your RSVP. Please try again.");
   }
+}
+
+function resetForm() {
+  // Reset all form elements
+  document.getElementById('guestName').value = '';
+  document.getElementById('lookupResult').textContent = '';
+  document.getElementById('rsvpForm').reset();
+  document.getElementById('rsvpForm').style.display = 'none';
+  document.getElementById('successMessage').style.display = 'none';
+  document.getElementById('confirmationScreen').style.display = 'none';
+  
+  // Reset global variables
+  matchedParty = null;
+  currentRSVPData = null;
 }

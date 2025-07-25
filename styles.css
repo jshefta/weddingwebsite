@@ -1,6 +1,21 @@
+/* === Font Face Declarations === */
+@font-face {
+  font-family: 'Calibre';
+  src: url('assets/fonts/Calibre-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Classic Script';
+  src: url('assets/fonts/CLASSSMN.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* === Global Theme Variables === */
 :root {
-  --font-family: 'Helvetica Neue', sans-serif;
+  --font-family: 'Calibre', sans-serif;
   --color-background: #000000;
   --color-primary: #de1808;
   --color-primary-dark: #b01406;
@@ -84,6 +99,9 @@ nav {
   text-decoration: none;
   color: var(--color-text);
   font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.04em;
 }
 
 main {
@@ -92,6 +110,15 @@ main {
   justify-content: center;
   align-items: center;
   min-height: 80vh;
+}
+
+/* === Header Styles === */
+h1 {
+  font-family: 'Classic Script', cursive;
+  font-size: 3rem;
+  font-weight: 100;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 /* === Hotel List Section === */

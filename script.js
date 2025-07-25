@@ -1,5 +1,5 @@
 
-const AIRTABLE_BASE_ID = "wvJpPa39Qg9LDh/tbl8n9BHTWzoV1BVM";
+const AIRTABLE_BASE_ID = "appwvJpPa39Qg9LDh";
 const AIRTABLE_TABLE_NAME = "Guests";
 const AIRTABLE_TOKEN = "patacrtltldFchKGR.b8dd1ae7be19e4b9cff95bbe8fd4b614faf6f0dafbc50e17ed513be2f2743d45";
 

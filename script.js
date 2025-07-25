@@ -4,16 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const hamburgerMenu = document.getElementById('hamburgerMenu');
   const navBar = document.getElementById('navBar');
   
+  console.log('Mobile menu elements found:', { hamburgerMenu, navBar });
+  
   if (hamburgerMenu && navBar) {
-    hamburgerMenu.addEventListener('click', function() {
+    hamburgerMenu.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Hamburger menu clicked');
       hamburgerMenu.classList.toggle('active');
       navBar.classList.toggle('active');
+      console.log('Menu classes after toggle:', {
+        hamburgerActive: hamburgerMenu.classList.contains('active'),
+        navActive: navBar.classList.contains('active')
+      });
     });
     
     // Close menu when clicking on a link
     const navLinks = navBar.querySelectorAll('a');
     navLinks.forEach(link => {
       link.addEventListener('click', function() {
+        console.log('Nav link clicked, closing menu');
         hamburgerMenu.classList.remove('active');
         navBar.classList.remove('active');
       });
@@ -26,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         navBar.classList.remove('active');
       }
     });
+  } else {
+    console.error('Mobile menu elements not found:', { hamburgerMenu, navBar });
   }
 });
 

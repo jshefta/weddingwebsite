@@ -427,6 +427,7 @@ main {
   }
 
   .nav-bar {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -437,16 +438,11 @@ main {
     padding: 1rem 0;
     gap: 0.5rem;
     border-bottom: 1px solid var(--color-border);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .nav-bar.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
+    display: flex;
   }
 
   .nav-bar li {

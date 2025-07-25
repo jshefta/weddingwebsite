@@ -32,20 +32,23 @@ function processGuestRecords(records) {
     const name = fields["Name"];
     const plusOneAllowed = fields["Plus One?"] || false;
     const attending = fields["Attending"];
+    const recordId = record.id;
 
     if (!parties[partyId]) {
       parties[partyId] = {
         partyId,
         partyNames: [],
         plusOneAllowed,
-        rsvpStatus: {}
+        rsvpStatus: {},
+        recordIds: {}
       };
     }
 
     if (name) {
       parties[partyId].partyNames.push(name);
-      // Store RSVP status for each guest
+      // Store RSVP status and record ID for each guest
       parties[partyId].rsvpStatus[name] = attending;
+      parties[partyId].recordIds[name] = recordId;
     }
 
     if (plusOneAllowed) {
@@ -176,20 +179,19 @@ async function confirmAndSubmit() {
     return;
   }
 
+  // Create records array for PATCH request (updating existing records)
   const records = matchedParty.partyNames.map(name => ({
+    id: matchedParty.recordIds[name],
     fields: {
-      "Party ID": currentRSVPData.partyId,
-      "Name": name,
       "Attending": currentRSVPData.responses[name],
       "Phone": currentRSVPData.phone,
-      "Plus One?": currentRSVPData.plusOneAllowed ? true : false,
       "Plus One Name": currentRSVPData.plusOneName
     }
   }));
 
   try {
     const response = await fetch(AIRTABLE_ENDPOINT, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${AIRTABLE_TOKEN}`,
         "Content-Type": "application/json"
@@ -198,14 +200,17 @@ async function confirmAndSubmit() {
     });
 
     const result = await response.json();
-    console.log("✅ RSVP submitted:", result);
+    console.log("✅ RSVP updated:", result);
+    
+    // Reload the guest list to reflect the updated status
+    await loadGuestList();
     
     // Show success message
     document.getElementById('confirmationScreen').style.display = 'none';
     document.getElementById('successMessage').style.display = 'block';
   } catch (error) {
-    console.error("❌ Failed to submit RSVP:", error);
-    alert("There was an error submitting your RSVP. Please try again.");
+    console.error("❌ Failed to update RSVP:", error);
+    alert("There was an error updating your RSVP. Please try again.");
   }
 }
 

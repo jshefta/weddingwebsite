@@ -50,7 +50,8 @@ nav {
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  position: relative;
 }
 
 .hamburger-menu {
@@ -93,6 +94,8 @@ nav {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .nav-bar li a {

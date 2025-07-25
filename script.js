@@ -4,7 +4,7 @@ let matchedParty = null;
 
 // Fetch guest list from the backend on page load
 window.addEventListener("DOMContentLoaded", () => {
-  fetch("https://script.google.com/macros/s/AKfycbx-zXSv8LXrcY2MGNdQ1x6vC4WYlfWyZI80e9uiWLKP4hpzmKaAPAXLbsSBYq9RRA7yqw/exec")
+  fetch("https://script.google.com/macros/s/AKfycbwjrDEaKrm-2J6lyaHKEKGuCBrFw1WpLhpqHwt93fVVFqkSEwvhKdaEYImbTK-0iu7r9Q/exec")
     .then(response => response.json())
     .then(data => {
       guestList = data;
@@ -115,4 +115,18 @@ function submitRSVP(event) {
     console.error("Fetch error:", error);
     alert("There was a problem submitting your RSVP.");
   });
+}
+
+function addCorsHeaders(response) {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  };
+
+  for (const key in headers) {
+    response.appendHeader(key, headers[key]);
+  }
+
+  return response;
 }

@@ -17,7 +17,9 @@ async function loadGuestList() {
       }
     });
     const data = await response.json();
+    console.log("🔍 Debug: Raw Airtable data:", data);
     guestList = processGuestRecords(data.records);
+    console.log("🔍 Debug: Processed guest list:", guestList);
     console.log("✅ Guest list loaded");
   } catch (error) {
     console.error("❌ Failed to load guest list:", error);
@@ -179,6 +181,9 @@ async function confirmAndSubmit() {
     return;
   }
 
+  console.log("🔍 Debug: Current RSVP Data:", currentRSVPData);
+  console.log("🔍 Debug: Matched Party:", matchedParty);
+
   // Create records array for PATCH request (updating existing records)
   const records = matchedParty.partyNames.map(name => ({
     id: matchedParty.recordIds[name],
@@ -189,7 +194,10 @@ async function confirmAndSubmit() {
     }
   }));
 
+  console.log("🔍 Debug: Records to update:", records);
+
   try {
+    console.log("🔍 Debug: Making PATCH request to:", AIRTABLE_ENDPOINT);
     const response = await fetch(AIRTABLE_ENDPOINT, {
       method: "PATCH",
       headers: {
@@ -199,8 +207,15 @@ async function confirmAndSubmit() {
       body: JSON.stringify({ records })
     });
 
+    console.log("🔍 Debug: Response status:", response.status);
+    console.log("🔍 Debug: Response headers:", response.headers);
+
     const result = await response.json();
     console.log("✅ RSVP updated:", result);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
+    }
     
     // Reload the guest list to reflect the updated status
     await loadGuestList();
@@ -210,7 +225,8 @@ async function confirmAndSubmit() {
     document.getElementById('successMessage').style.display = 'block';
   } catch (error) {
     console.error("❌ Failed to update RSVP:", error);
-    alert("There was an error updating your RSVP. Please try again.");
+    console.error("❌ Error details:", error.message);
+    alert("There was an error updating your RSVP. Please try again. Check console for details.");
   }
 }
 

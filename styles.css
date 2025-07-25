@@ -291,8 +291,7 @@ main {
 
 /* === Form Styles === */
 #rsvpForm {
-  max-width: 600px;
-  margin: 2rem auto;
+  flex: 1;
   padding: 2rem;
   background: var(--color-white);
   color: var(--color-text);
@@ -352,9 +351,18 @@ main {
   background: var(--color-primary-dark);
 }
 
-#lookup {
-  max-width: 600px;
+/* RSVP Layout Container */
+.rsvp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
   margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+#lookup {
+  flex: 1;
   padding: 2rem;
   background: var(--color-white);
   color: var(--color-text);
@@ -399,6 +407,22 @@ main {
 }
 
 /* === Responsive Styles === */
+/* Desktop layout - side by side */
+@media (min-width: 768px) {
+  .rsvp-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  #lookup {
+    max-width: 400px;
+  }
+  
+  #rsvpForm {
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 700px) {
   .hotel {
     flex-direction: column;

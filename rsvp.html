@@ -29,27 +29,29 @@
   <main>
     <h1>RSVP</h1>
     <div id="info"><p>We kindly request that guests RSVP by October 15th. If you have any issues finding your RSVP, please reach out to us and we can assist.</p></div>
-    <div id="lookup">
-      <label for="guestName">Enter your name:</label>
-      <input type="text" id="guestName">
-      <button onclick="findGuest()">Find My Invitation</button>
-      <p id="lookupResult"></p>
-    </div>
-    <form id="rsvpForm" style="display:none;" onsubmit="showConfirmation(event)">
-      <div id="rsvpStatus" class="rsvp-status"></div>
-      <div id="guestOptions"></div>
-
-      <div id="plusOneContainer" style="display:none;">
-        <label for="plusOneName">Plus One Name:</label>
-        <input type="text" id="plusOneName" name="plusOneName">
+    <div class="rsvp-container">
+      <div id="lookup">
+        <label for="guestName">Enter your name:</label>
+        <input type="text" id="guestName">
+        <button onclick="findGuest()">Find My Invitation</button>
+        <p id="lookupResult"></p>
       </div>
+      <form id="rsvpForm" style="display:none;" onsubmit="showConfirmation(event)">
+        <div id="rsvpStatus" class="rsvp-status"></div>
+        <div id="guestOptions"></div>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" required><br>
-      <label for="phone">Phone:</label>
-      <input type="tel" id="phone"><br>
-      <button type="submit">Review RSVP</button>
-    </form>
+        <div id="plusOneContainer" style="display:none;">
+          <label for="plusOneName">Plus One Name:</label>
+          <input type="text" id="plusOneName" name="plusOneName">
+        </div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br>
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone"><br>
+        <button type="submit">Review RSVP</button>
+      </form>
+    </div>
 
     <!-- Confirmation Screen -->
     <div id="confirmationScreen" style="display:none;">

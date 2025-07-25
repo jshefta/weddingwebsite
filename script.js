@@ -31,17 +31,21 @@ function processGuestRecords(records) {
     const partyId = fields["Party ID"];
     const name = fields["Name"];
     const plusOneAllowed = fields["Plus One?"] || false;
+    const attending = fields["Attending"];
 
     if (!parties[partyId]) {
       parties[partyId] = {
         partyId,
         partyNames: [],
-        plusOneAllowed
+        plusOneAllowed,
+        rsvpStatus: {}
       };
     }
 
     if (name) {
       parties[partyId].partyNames.push(name);
+      // Store RSVP status for each guest
+      parties[partyId].rsvpStatus[name] = attending;
     }
 
     if (plusOneAllowed) {
@@ -62,27 +66,50 @@ function findGuest() {
   const form = document.getElementById('rsvpForm');
   const guestOptions = document.getElementById('guestOptions');
   const plusOneContainer = document.getElementById('plusOneContainer');
+  const rsvpStatus = document.getElementById('rsvpStatus');
 
   if (matchedParty) {
     result.textContent = "We found your invitation!";
     form.style.display = "block";
-    guestOptions.innerHTML = matchedParty.partyNames.map(name => `
-      <div>
-        <label>${name}</label>
-        <select name="${name}">
-          <option value="Yes">Will attend</option>
-          <option value="No">Will not attend</option>
-        </select>
-      </div>
-    `).join("");
+    
+    // Check RSVP status for the party
+    const hasRSVPed = checkPartyRSVPStatus(matchedParty);
+    
+    // Display RSVP status
+    if (hasRSVPed) {
+      rsvpStatus.innerHTML = '<div class="status-badge confirmed">RSVP Confirmed</div>';
+    } else {
+      rsvpStatus.innerHTML = '<div class="status-badge pending">Awaiting RSVP</div>';
+    }
+    
+    // Pre-fill form with existing RSVP data if available
+    guestOptions.innerHTML = matchedParty.partyNames.map(name => {
+      const existingResponse = matchedParty.rsvpStatus[name];
+      const selectedYes = existingResponse === 'Yes' ? 'selected' : '';
+      const selectedNo = existingResponse === 'No' ? 'selected' : '';
+      
+      return `
+        <div>
+          <label>${name}</label>
+          <select name="${name}">
+            <option value="Yes" ${selectedYes}>Will attend</option>
+            <option value="No" ${selectedNo}>Will not attend</option>
+          </select>
+        </div>
+      `;
+    }).join("");
 
     plusOneContainer.style.display = matchedParty.plusOneAllowed ? "block" : "none";
   } else {
-    result.textContent = "Sorry, we couldn’t find your name. Please check spelling.";
+    result.textContent = "Sorry, we couldn't find your name. Please check spelling.";
     form.style.display = "none";
   }
 }
 
+function checkPartyRSVPStatus(party) {
+  // Check if any guest in the party has RSVPed (has a non-null attending value)
+  return party.partyNames.some(name => party.rsvpStatus[name] !== null && party.rsvpStatus[name] !== undefined);
+}
 
 
 function showConfirmation(event) {
@@ -190,6 +217,7 @@ function resetForm() {
   document.getElementById('rsvpForm').style.display = 'none';
   document.getElementById('successMessage').style.display = 'none';
   document.getElementById('confirmationScreen').style.display = 'none';
+  document.getElementById('rsvpStatus').innerHTML = '';
   
   // Reset global variables
   matchedParty = null;

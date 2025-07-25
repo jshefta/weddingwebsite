@@ -270,6 +270,31 @@ main {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+.rsvp-status {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.confirmed {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.status-badge.pending {
+  background: #ffc107;
+  color: var(--color-black);
+}
+
 #rsvpForm label {
   display: block;
   margin: 1rem 0 0.5rem 0;

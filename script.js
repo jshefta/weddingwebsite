@@ -233,7 +233,8 @@ async function confirmAndSubmit() {
       "Attending": currentRSVPData.responses[name],
       "Responded": "Yes",
       "Email": currentRSVPData.email,
-      "Phone": currentRSVPData.phone || ""
+      "Phone": currentRSVPData.phone || "",
+      "Plus One": currentRSVPData.plusOneName || ""
     }
   }));
 

@@ -105,6 +105,11 @@ nav {
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.nav-bar li a:hover {
+  color: #ffa3bf;
 }
 
 main {
@@ -116,6 +121,12 @@ main {
 }
 
 /* === Header Styles === */
+.logo-image {
+  max-width: 40px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
 h1 {
   font-family: 'Classic Script', cursive;
   font-size: 3rem;
@@ -512,6 +523,7 @@ h1 {
 
   .nav-bar li a:hover {
     background-color: var(--color-border);
+    color: #ffa3bf;
   }
 
   nav {

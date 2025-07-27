@@ -13,6 +13,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('assets/fonts/InstrumentSerif-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* === Global Theme Variables === */
 :root {
   --font-family: 'Calibre', sans-serif;
@@ -156,11 +163,43 @@ main {
 }
 
 h1 {
-  font-family: 'Classic Script', cursive;
-  font-size: 3rem;
-  font-weight: 100;
+  font-family: 'Instrument Serif', serif;
+  font-size: 140px;
+  font-weight: normal;
   margin-bottom: 1rem;
   text-align: center;
+  line-height: 1.1;
+}
+
+/* Responsive font sizes */
+@media (max-width: 1200px) {
+  h1 {
+    font-size: 120px;
+  }
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 50px;
+  }
 }
 
 /* === Hotel List Section === */

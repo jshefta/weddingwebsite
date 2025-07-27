@@ -1,3 +1,6 @@
+/* === Google Fonts Import === */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap');
+
 /* === Font Face Declarations === */
 @font-face {
   font-family: 'Calibre';
@@ -13,12 +16,7 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Instrument Serif';
-  src: url('assets/fonts/InstrumentSerif-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+/* Instrument Serif is now loaded via Google Fonts */
 
 /* === Global Theme Variables === */
 :root {
@@ -43,6 +41,9 @@ body {
   padding: 0;
   background-color: var(--color-background);
   color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 nav {
@@ -165,7 +166,7 @@ main {
 h1 {
   font-family: 'Instrument Serif', serif;
   font-size: 140px;
-  font-weight: normal;
+  font-weight: 400;
   margin-bottom: 1rem;
   text-align: center;
   line-height: 1.1;
@@ -205,7 +206,7 @@ h1 {
 h2 {
   font-family: 'Instrument Serif', serif;
   font-size: 28px;
-  font-weight: normal;
+  font-weight: 400;
   font-style: italic;
   margin-bottom: 1rem;
   text-align: center;
@@ -289,6 +290,7 @@ h2 {
 .date {
   font-family: 'Instrument Serif', serif;
   font-size: 27px;
+  font-weight: 400;
   text-align: center;
   margin: 1rem 0;
   color: var(--color-white);
@@ -308,6 +310,7 @@ h2 {
 .description {
   font-family: 'Instrument Serif', serif;
   font-size: 24px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   line-height: 1;
   text-align: center;
@@ -673,6 +676,134 @@ h2 {
   
   #rsvpForm {
     max-width: 600px;
+  }
+}
+
+/* === Event Item Styles === */
+.event-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 178px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.event-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.event-label {
+  font-family: 'Calibre', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4BB6FF;
+  margin-bottom: 0.5rem;
+}
+
+.event-time {
+  font-family: 'Instrument Serif', serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+.event-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+.event-address {
+  font-family: 'Calibre', sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  opacity: 0.8;
+}
+
+/* Responsive styles for event items */
+@media (max-width: 700px) {
+  .event-item {
+    margin-top: 100px;
+    padding: 0 1rem;
+  }
+  
+  .event-image {
+    max-width: 300px;
+  }
+  
+  .event-time,
+  .event-name {
+    font-size: 32px;
+  }
+  
+  .event-label {
+    font-size: 12px;
+  }
+  
+  .event-address {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 500px) {
+  .event-item {
+    margin-top: 80px;
+  }
+  
+  .event-image {
+    max-width: 250px;
+  }
+  
+  .event-time,
+  .event-name {
+    font-size: 28px;
+  }
+  
+  .event-label {
+    font-size: 11px;
+  }
+  
+  .event-address {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .event-item {
+    margin-top: 60px;
+  }
+  
+  .event-image {
+    max-width: 200px;
+  }
+  
+  .event-time,
+  .event-name {
+    font-size: 24px;
+  }
+  
+  .event-label {
+    font-size: 10px;
+  }
+  
+  .event-address {
+    font-size: 9px;
   }
 }
 

@@ -691,6 +691,10 @@ h2 {
   margin-right: auto;
 }
 
+.event-item + .event-item {
+  margin-top: 70px;
+}
+
 .event-image {
   width: 100%;
   max-width: 400px;
@@ -743,6 +747,10 @@ h2 {
     padding: 0 1rem;
   }
   
+  .event-item + .event-item {
+    margin-top: 80px;
+  }
+  
   .event-image {
     max-width: 300px;
   }
@@ -766,6 +774,10 @@ h2 {
     margin-top: 80px;
   }
   
+  .event-item + .event-item {
+    margin-top: 60px;
+  }
+  
   .event-image {
     max-width: 250px;
   }
@@ -787,6 +799,10 @@ h2 {
 @media (max-width: 400px) {
   .event-item {
     margin-top: 60px;
+  }
+  
+  .event-item + .event-item {
+    margin-top: 50px;
   }
   
   .event-image {

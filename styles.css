@@ -39,12 +39,11 @@ body {
 }
 
 nav {
-  background-color: var(--color-gray);
+  background-color: var(--color-black);
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid var(--color-border);
 }
 
 .nav-container {
@@ -100,7 +99,7 @@ nav {
 
 .nav-bar li a {
   text-decoration: none;
-  color: var(--color-text);
+  color: var(--color-white);
   font-weight: bold;
   text-transform: uppercase;
   font-size: 12px;
@@ -109,7 +108,7 @@ nav {
 }
 
 .nav-bar li a:hover {
-  color: #ffa3bf;
+  color: #FFEA00;
 }
 
 main {
@@ -524,12 +523,11 @@ h1 {
     top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--color-gray);
+    background-color: var(--color-black);
     flex-direction: column;
     align-items: center;
     padding: 1rem 0;
     gap: 0.5rem;
-    border-bottom: 1px solid var(--color-border);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
@@ -550,7 +548,7 @@ h1 {
 
   .nav-bar li a:hover {
     background-color: var(--color-border);
-    color: #ffa3bf;
+    color: #FFEA00;
   }
 
   nav {

@@ -60,8 +60,20 @@ async function loadGuestList() {
     });
     const data = await response.json();
     console.log("🔍 Debug: Raw Airtable data:", data);
+    
+    // Check for party 29 specifically
+    const party29Records = data.records.filter(record => 
+      record.fields["Party ID"] === 29
+    );
+    console.log("🔍 Debug: Party 29 records:", party29Records);
+    
     guestList = processGuestRecords(data.records);
     console.log("🔍 Debug: Processed guest list:", guestList);
+    
+    // Check if party 29 exists in processed data
+    const party29Processed = guestList.find(party => party.partyId === 29);
+    console.log("🔍 Debug: Party 29 in processed data:", party29Processed);
+    
     console.log("✅ Guest list loaded");
   } catch (error) {
     console.error("❌ Failed to load guest list:", error);
@@ -69,14 +81,34 @@ async function loadGuestList() {
 }
 
 function processGuestRecords(records) {
+  console.log("🔍 Debug: Processing", records.length, "records");
+  
+  // Log the first few records to see field structure
+  if (records.length > 0) {
+    console.log("🔍 Debug: First record fields:", Object.keys(records[0].fields));
+    console.log("🔍 Debug: First record data:", records[0].fields);
+  }
+  
   const parties = {};
-  records.forEach(record => {
+  records.forEach((record, index) => {
     const fields = record.fields;
     const partyId = fields["Party ID"];
     const name = fields["Name"];
     const plusOneAllowed = fields["Plus One?"] || false;
     const attending = fields["Attending"];
     const recordId = record.id;
+
+    // Debug party 29 specifically
+    if (partyId === 29) {
+      console.log(`🔍 Debug: Party 29 record ${index}:`, {
+        partyId,
+        name,
+        plusOneAllowed,
+        attending,
+        recordId,
+        allFields: fields
+      });
+    }
 
     if (!parties[partyId]) {
       parties[partyId] = {
@@ -105,28 +137,84 @@ function processGuestRecords(records) {
 
 function findGuest() {
   const nameInput = document.getElementById('guestName').value.trim().toLowerCase();
+  console.log("🔍 Searching for:", nameInput);
+  console.log("🔍 Available parties:", guestList.map(party => ({
+    partyId: party.partyId,
+    partyNames: party.partyNames
+  })));
+  
+  // More detailed debugging
+  guestList.forEach((party, index) => {
+    console.log(`🔍 Party ${index}:`, party.partyId, "Names:", party.partyNames);
+    party.partyNames.forEach(name => {
+      console.log(`  - "${name.toLowerCase()}" includes "${nameInput}":`, name.toLowerCase().includes(nameInput));
+    });
+  });
+  
+  // Search specifically for Matt and Archie
+  const mattParty = guestList.find(party => 
+    party.partyNames.some(name => name.toLowerCase().includes('matt'))
+  );
+  const archieParty = guestList.find(party => 
+    party.partyNames.some(name => name.toLowerCase().includes('archie'))
+  );
+  
+  console.log("🔍 Party with Matt:", mattParty);
+  console.log("🔍 Party with Archie:", archieParty);
+  
   matchedParty = guestList.find(party =>
     party.partyNames.some(name => name.toLowerCase().includes(nameInput))
   );
+  
+  console.log("🔍 Matched party:", matchedParty);
 
   const result = document.getElementById('lookupResult');
   const form = document.getElementById('rsvpForm');
   const guestOptions = document.getElementById('guestOptions');
   const plusOneContainer = document.getElementById('plusOneContainer');
   const rsvpStatus = document.getElementById('rsvpStatus');
+  const lookup = document.getElementById('lookup');
 
   if (matchedParty) {
-    result.textContent = "We found your invitation!";
+    // Hide the entire lookup section
+    lookup.style.display = "none";
+    
+    // Show the RSVP form
     form.style.display = "block";
     
     // Check RSVP status for the party
     const hasRSVPed = checkPartyRSVPStatus(matchedParty);
     
+    // Get first names from all party members
+    const firstNames = matchedParty.partyNames.map(name => name.split(' ')[0]);
+    
     // Display RSVP status
     if (hasRSVPed) {
-      rsvpStatus.innerHTML = '<div class="status-badge confirmed">RSVP Confirmed</div>';
+      let greeting;
+      if (firstNames.length === 1) {
+        greeting = `Hey ${firstNames[0]}`;
+      } else if (firstNames.length === 2) {
+        greeting = `Hey ${firstNames[0]} and ${firstNames[1]}`;
+      } else {
+        // For 3+ names, use "and" format
+        const lastFirstName = firstNames.pop();
+        greeting = `Hey ${firstNames.join(', ')} and ${lastFirstName}`;
+      }
+      
+      rsvpStatus.innerHTML = `<div class="status-badge confirmed">${greeting}, we found your invitation and the RSVP is confirmed!</div>`;
     } else {
-      rsvpStatus.innerHTML = '<div class="status-badge pending">Awaiting RSVP</div>';
+      let greeting;
+      if (firstNames.length === 1) {
+        greeting = `Hey ${firstNames[0]}`;
+      } else if (firstNames.length === 2) {
+        greeting = `Hey ${firstNames[0]} and ${firstNames[1]}`;
+      } else {
+        // For 3+ names, use "and" format
+        const lastFirstName = firstNames.pop();
+        greeting = `Hey ${firstNames.join(', ')} and ${lastFirstName}`;
+      }
+      
+      rsvpStatus.innerHTML = `<div class="status-badge pending">${greeting}, we found your invitation and are waiting for your RSVP</div>`;
     }
     
     // Pre-fill form with existing RSVP data if available
@@ -168,7 +256,6 @@ function showConfirmation(event) {
     partyNames: matchedParty.partyNames,
     plusOneAllowed: matchedParty.plusOneAllowed,
     plusOneName: formData.get("plusOneName") || "",
-    email: formData.get("email"),
     phone: formData.get("phone"),
     responses: {}
   };
@@ -197,7 +284,6 @@ function showConfirmation(event) {
 
   // Contact information
   detailsHTML += '<h3>Contact Information:</h3>';
-  detailsHTML += `<p><strong>Email:</strong> ${currentRSVPData.email}</p>`;
   if (currentRSVPData.phone) {
     detailsHTML += `<p><strong>Phone:</strong> ${currentRSVPData.phone}</p>`;
   }
@@ -232,7 +318,6 @@ async function confirmAndSubmit() {
     fields: {
       "Attending": currentRSVPData.responses[name],
       "Responded": "Yes",
-      "Email": currentRSVPData.email,
       "Phone": currentRSVPData.phone || "",
       "Plus One": currentRSVPData.plusOneName || ""
     }
@@ -284,6 +369,9 @@ function resetForm() {
   document.getElementById('successMessage').style.display = 'none';
   document.getElementById('confirmationScreen').style.display = 'none';
   document.getElementById('rsvpStatus').innerHTML = '';
+  
+  // Show the lookup section again
+  document.getElementById('lookup').style.display = 'block';
   
   // Reset global variables
   matchedParty = null;

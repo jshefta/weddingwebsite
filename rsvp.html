@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RSVP</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script> <!-- Make sure this matches your JS filename -->
+  <script src="script.js" defer></script>
 </head>
 <body>
   <nav>
@@ -16,24 +16,31 @@
         <span></span>
       </button>
       <ul class="nav-bar" id="navBar">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">Wedding</a></li>
+        <li><a href="hotels.html">Hotels</a></li>
         <li><a href="rsvp.html">RSVP</a></li>
         <li><a href="registry.html">Registry</a></li>
-        <li><a href="hotels.html">Hotels</a></li>
-        <li><a href="faq.html">FAQ</a></li>
       </ul>
     </div>
   </nav>
   <main>
-    <h1>RSVP</h1>
-    <div id="info"><p>We kindly request that guests RSVP by October 15th. If you have any issues finding your RSVP, please reach out to us and we can assist.</p></div>
+    <div class="rsvp-header">
+      <div class="chinese-badge">敬请回复</div>
+      <h1>RSVP</h1>
+      <div class="rsvp-info">
+        <p>RSVP by October 15th</p>
+        <p>If you have any problems finding your RSVP, please text us!</p>
+      </div>
+    </div>
+    
     <div class="rsvp-container">
       <div id="lookup">
-        <label for="guestName">Enter your name:</label>
-        <input type="text" id="guestName">
-        <button onclick="findGuest()">Find My Invitation</button>
+        <p class="lookup-prompt">Enter your name to find your invitation</p>
+        <input type="text" id="guestName" placeholder="Your name">
+        <button onclick="findGuest()">FIND MY INVITATION</button>
         <p id="lookupResult"></p>
       </div>
+      
       <form id="rsvpForm" style="display:none;" onsubmit="showConfirmation(event)">
         <div id="rsvpStatus" class="rsvp-status"></div>
         <div id="guestOptions"></div>
@@ -43,10 +50,10 @@
           <input type="text" id="plusOneName" name="plusOneName">
         </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone"><br>
+        <div id="phoneContainer">
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
         <button type="submit">Review RSVP</button>
       </form>
     </div>
@@ -68,6 +75,13 @@
       <button onclick="resetForm()" class="reset-btn">RSVP for Another Guest</button>
     </div>
   </main>
+  
+  <footer>
+    <div class="footer-content">
+      <img src="images/happiness.png" alt="Vibe Logo" class="footer-logo">
+      <p class="footer-text">VIBE CODED BY JESSICA</p>
+    </div>
+  </footer>
 
   <script>
     window.addEventListener("DOMContentLoaded", () => {

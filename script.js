@@ -162,9 +162,17 @@ function findGuest() {
   console.log("🔍 Party with Matt:", mattParty);
   console.log("🔍 Party with Archie:", archieParty);
   
+  // Try exact match first, then partial match
   matchedParty = guestList.find(party =>
-    party.partyNames.some(name => name.toLowerCase().includes(nameInput))
+    party.partyNames.some(name => name.toLowerCase() === nameInput)
   );
+  
+  // If no exact match, try partial match
+  if (!matchedParty) {
+    matchedParty = guestList.find(party =>
+      party.partyNames.some(name => name.toLowerCase().includes(nameInput))
+    );
+  }
   
   console.log("🔍 Matched party:", matchedParty);
 

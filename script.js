@@ -47,24 +47,7 @@ function showPasswordPrompt() {
     color: #ffffff;
   `;
   
-  const title = document.createElement('h1');
-  title.textContent = 'Allan & Jessica';
-  title.style.cssText = `
-    margin: 0 0 10px 0;
-    font-size: 28px;
-    color: #ffffff;
-    font-weight: 600;
-    font-family: 'Instrument Serif', serif;
-  `;
-  
-  const subtitle = document.createElement('p');
-  subtitle.textContent = 'Wedding Website';
-  subtitle.style.cssText = `
-    margin: 0 0 30px 0;
-    color: #ffffff;
-    font-size: 16px;
-    opacity: 0.8;
-  `;
+
   
   const passwordLabel = document.createElement('p');
   passwordLabel.textContent = 'INPUT YOUR PASSWORD';
@@ -128,14 +111,7 @@ function showPasswordPrompt() {
     submitButton.style.transform = 'translateY(0)';
   });
   
-  passwordInput.addEventListener('focus', () => {
-    passwordInput.style.outline = '2px solid #de1808';
-    passwordInput.style.outlineOffset = '2px';
-  });
-  
-  passwordInput.addEventListener('blur', () => {
-    passwordInput.style.outline = 'none';
-  });
+
   
   // Handle password submission
   function handlePasswordSubmit() {
@@ -173,8 +149,6 @@ function showPasswordPrompt() {
   });
   
   // Assemble the prompt
-  promptContainer.appendChild(title);
-  promptContainer.appendChild(subtitle);
   promptContainer.appendChild(passwordLabel);
   promptContainer.appendChild(passwordInput);
   promptContainer.appendChild(submitButton);

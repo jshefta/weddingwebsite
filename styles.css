@@ -217,10 +217,24 @@ h2 {
   line-height: 1.1;
 }
 
+/* Make the ampersand larger */
+h2 .ampersand {
+  font-size: 67px;
+  font-weight: 400;
+  font-style: italic;
+  color: #888888;
+  vertical-align: middle;
+  margin: 0 20px;
+}
+
 /* Responsive font sizes for h2 */
 @media (max-width: 1200px) {
   h2 {
     font-size: 26px;
+  }
+  
+  h2 .ampersand {
+    font-size: 60px;
   }
 }
 
@@ -228,11 +242,19 @@ h2 {
   h2 {
     font-size: 24px;
   }
+  
+  h2 .ampersand {
+    font-size: 52px;
+  }
 }
 
 @media (max-width: 700px) {
   h2 {
     font-size: 22px;
+  }
+  
+  h2 .ampersand {
+    font-size: 45px;
   }
 }
 
@@ -240,11 +262,19 @@ h2 {
   h2 {
     font-size: 20px;
   }
+  
+  h2 .ampersand {
+    font-size: 38px;
+  }
 }
 
 @media (max-width: 400px) {
   h2 {
     font-size: 18px;
+  }
+  
+  h2 .ampersand {
+    font-size: 32px;
   }
 }
 
@@ -813,6 +843,7 @@ h2 {
 .rsvp-header {
   text-align: center;
   margin-bottom: 3rem;
+  margin-top: 4rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -846,6 +877,83 @@ h2 {
   margin: 0.5rem 0;
   color: var(--color-white);
   font-family: 'Instrument Serif', serif;
+}
+
+/* Custom styling for RSVP page sticker */
+.rsvp-header .sticker {
+  left: 830px;
+  top: -10px;
+  transform: rotate(15deg);
+  width: 162px;
+}
+
+.rsvp-header .sticker-text {
+  font-size: 30px;
+}
+
+/* Responsive styles for RSVP sticker */
+@media (max-width: 1200px) {
+  .rsvp-header .sticker {
+    left: 650px;
+    top: -8px;
+    width: 140px;
+  }
+  
+  .rsvp-header .sticker-text {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 900px) {
+  .rsvp-header .sticker {
+    left: 500px;
+    top: -5px;
+    width: 120px;
+    transform: rotate(12deg);
+  }
+  
+  .rsvp-header .sticker-text {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 700px) {
+  .rsvp-header .sticker {
+    left: 350px;
+    top: -3px;
+    width: 100px;
+    transform: rotate(10deg);
+  }
+  
+  .rsvp-header .sticker-text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .rsvp-header .sticker {
+    left: 250px;
+    top: -2px;
+    width: 80px;
+    transform: rotate(8deg);
+  }
+  
+  .rsvp-header .sticker-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .rsvp-header .sticker {
+    left: 180px;
+    top: -1px;
+    width: 70px;
+    transform: rotate(5deg);
+  }
+  
+  .rsvp-header .sticker-text {
+    font-size: 12px;
+  }
 }
 
 /* RSVP Layout Container */
@@ -1056,6 +1164,16 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
+.event-name a {
+  color: var(--color-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.event-name a:hover {
+  color: var(--color-primary);
+}
+
 .event-address {
   font-family: 'Calibre', sans-serif;
   font-size: 12px;
@@ -1146,6 +1264,88 @@ h2 {
   
   .event-address {
     font-size: 9px;
+  }
+}
+
+/* === Event Image Container and Sticker === */
+.event-image-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 400px;
+}
+
+.event-sticker {
+  position: absolute;
+  width: 85px;
+  height: 49px;
+  background-color: white;
+  border-radius: 50px;
+  border: 3px solid black;
+  outline: 1px solid white;
+  outline-offset: -1px;
+  top: -23px;
+  left: -31px;
+  transform: rotate(-15deg);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.afterparty-event .event-sticker {
+  width: 136px;
+}
+
+.event-sticker-text {
+  color: #FF437F;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+/* Responsive styles for event sticker */
+@media (max-width: 700px) {
+  .event-sticker {
+    width: 70px;
+    height: 40px;
+  }
+  
+  .afterparty-event .event-sticker {
+    width: 110px;
+  }
+  
+  .event-sticker-text {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 500px) {
+  .event-sticker {
+    width: 60px;
+    height: 35px;
+  }
+  
+  .afterparty-event .event-sticker {
+    width: 95px;
+  }
+  
+  .event-sticker-text {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .event-sticker {
+    width: 50px;
+    height: 30px;
+  }
+  
+  .afterparty-event .event-sticker {
+    width: 80px;
+  }
+  
+  .event-sticker-text {
+    font-size: 16px;
   }
 }
 
@@ -1344,8 +1544,7 @@ footer {
   }
 
   .nav-bar li a:hover {
-    background-color: var(--color-border);
-    color: #FFEA00;
+    /* Hover effect removed for mobile */
   }
 
   nav {

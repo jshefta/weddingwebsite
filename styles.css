@@ -199,11 +199,7 @@ h1 {
   }
 }
 
-@media (max-width: 500px) {
-  h1 {
-    font-size: 60px;
-  }
-}
+
 
 @media (max-width: 400px) {
   h1 {
@@ -263,7 +259,12 @@ h2 {
 
 .sticker-container {
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }
 
 .sticker {
@@ -293,6 +294,45 @@ h2 {
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
+}
+
+@media (min-width: 1200px) {
+  .sticker {
+    top: 54px;
+  }
+  
+  .sticker-text {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .sticker {
+    top: 49px;
+    width: 168px;
+    height: 49px;
+  }
+  
+  .sticker-text {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 80px;
+  }
+  
+  .sticker {
+    top: 30px;
+    height: 35px;
+    width: 136px;
+    left: 57%;
+  }
+  
+  .sticker-text {
+    font-size: 20px;
+  }
 }
 
 .date {
@@ -504,8 +544,62 @@ h2 {
   max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
-  background: var(--color-white);
-  color: var(--color-text);
+  text-align: center;
+}
+
+.thank-you-message {
+  color: var(--color-white);
+  text-align: center;
+}
+
+.thank-you-message h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.thank-you-message p {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+  text-align: center;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Responsive styles for thank you message */
+@media (max-width: 700px) {
+  .thank-you-message h2 {
+    font-size: 40px;
+  }
+  
+  .thank-you-message p {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .thank-you-message h2 {
+    font-size: 32px;
+  }
+  
+  .thank-you-message p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .thank-you-message h2 {
+    font-size: 28px;
+  }
+  
+  .thank-you-message p {
+    font-size: 16px;
+  }
 }
 
 .confirmation-summary {
@@ -656,11 +750,7 @@ h2 {
 #guestOptions {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 720px;
   text-align: center;
-  justify-content: center;
 }
 
 #plusOneContainer {
@@ -689,28 +779,30 @@ h2 {
 }
 
 #rsvpForm input, #rsvpForm select {
-  width: 720px;
+  width: 100%;
   height: 80px;
   max-width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--color-border);
   font-size: 32px;
   box-sizing: border-box;
-  min-width: 720px;
   text-align: center;
 }
 
 #rsvpForm button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
   background: var(--color-primary);
   color: var(--color-white);
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
+  text-decoration: none;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 32px;
   text-transform: uppercase;
+  border: 2px solid var(--color-white);
+  transition: all 0.2s;
   align-self: center;
+  cursor: pointer;
 }
 
 #rsvpForm button:hover {
@@ -796,6 +888,17 @@ h2 {
   font-size: 32px;
   text-align: center;
   font-weight: 300;
+}
+
+/* Specific styling for guestName placeholder */
+#guestName::placeholder {
+  color: #4BB6FF;
+  font-size: 28px;
+  text-align: center;
+  font-weight: 400;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 #lookup button {

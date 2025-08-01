@@ -1,6 +1,198 @@
 
-// Mobile menu functionality
+// Password protection
+const CORRECT_PASSWORD = "peanut";
+
+function checkPassword() {
+  const isAuthenticated = sessionStorage.getItem('weddingSiteAuthenticated');
+  
+  if (!isAuthenticated) {
+    showPasswordPrompt();
+    return false;
+  }
+  return true;
+}
+
+function showPasswordPrompt() {
+  // Hide the main content but keep body visible for the overlay
+  const mainContent = document.querySelector('main');
+  const nav = document.querySelector('nav');
+  const footer = document.querySelector('footer');
+  
+  if (mainContent) mainContent.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  if (footer) footer.style.display = 'none';
+  
+  // Create password prompt overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'passwordOverlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Calibre', sans-serif;
+  `;
+  
+  const promptContainer = document.createElement('div');
+  promptContainer.style.cssText = `
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    color: #ffffff;
+  `;
+  
+  const title = document.createElement('h1');
+  title.textContent = 'Allan & Jessica';
+  title.style.cssText = `
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    color: #ffffff;
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+  `;
+  
+  const subtitle = document.createElement('p');
+  subtitle.textContent = 'Wedding Website';
+  subtitle.style.cssText = `
+    margin: 0 0 30px 0;
+    color: #ffffff;
+    font-size: 16px;
+    opacity: 0.8;
+  `;
+  
+  const passwordLabel = document.createElement('p');
+  passwordLabel.textContent = 'INPUT YOUR PASSWORD';
+  passwordLabel.style.cssText = `
+    margin: 0 0 15px 0;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'Calibre', sans-serif;
+  `;
+  
+  const passwordInput = document.createElement('input');
+  passwordInput.type = 'password';
+  passwordInput.placeholder = 'Enter password';
+  passwordInput.style.cssText = `
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 0;
+  `;
+  
+  const submitButton = document.createElement('button');
+  submitButton.textContent = 'Enter';
+  submitButton.style.cssText = `
+    background: #de1808;
+    color: white;
+    border: 2px solid #ffffff;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    text-transform: uppercase;
+  `;
+  
+  const errorMessage = document.createElement('p');
+  errorMessage.style.cssText = `
+    color: #de1808;
+    margin: 10px 0 0 0;
+    font-size: 14px;
+    display: none;
+  `;
+  
+  // Add hover effects
+  submitButton.addEventListener('mouseenter', () => {
+    submitButton.style.background = '#b01406';
+    submitButton.style.transform = 'translateY(-2px)';
+  });
+  
+  submitButton.addEventListener('mouseleave', () => {
+    submitButton.style.background = '#de1808';
+    submitButton.style.transform = 'translateY(0)';
+  });
+  
+  passwordInput.addEventListener('focus', () => {
+    passwordInput.style.outline = '2px solid #de1808';
+    passwordInput.style.outlineOffset = '2px';
+  });
+  
+  passwordInput.addEventListener('blur', () => {
+    passwordInput.style.outline = 'none';
+  });
+  
+  // Handle password submission
+  function handlePasswordSubmit() {
+    const enteredPassword = passwordInput.value.trim();
+    
+    if (enteredPassword.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
+      sessionStorage.setItem('weddingSiteAuthenticated', 'true');
+      
+      // Show the content again
+      if (mainContent) mainContent.style.display = 'block';
+      if (nav) nav.style.display = 'block';
+      if (footer) footer.style.display = 'block';
+      
+      overlay.remove();
+      
+      // Force layout recalculation to fix centering issues
+      setTimeout(() => {
+        if (mainContent) mainContent.style.display = 'block';
+        // Force a reflow to ensure proper centering
+        document.body.offsetHeight;
+      }, 10);
+    } else {
+      errorMessage.textContent = 'Incorrect password. Please try again.';
+      errorMessage.style.display = 'block';
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+  }
+  
+  submitButton.addEventListener('click', handlePasswordSubmit);
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      handlePasswordSubmit();
+    }
+  });
+  
+  // Assemble the prompt
+  promptContainer.appendChild(title);
+  promptContainer.appendChild(subtitle);
+  promptContainer.appendChild(passwordLabel);
+  promptContainer.appendChild(passwordInput);
+  promptContainer.appendChild(submitButton);
+  promptContainer.appendChild(errorMessage);
+  overlay.appendChild(promptContainer);
+  document.body.appendChild(overlay);
+  
+  // Focus on password input
+  passwordInput.focus();
+}
+
+// Check password on page load
 document.addEventListener('DOMContentLoaded', function() {
+  if (!checkPassword()) {
+    return; // Stop execution if not authenticated
+  }
+  
+  // Mobile menu functionality
   const hamburgerMenu = document.getElementById('hamburgerMenu');
   const navBar = document.getElementById('navBar');
   
@@ -39,6 +231,24 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     console.error('Mobile menu elements not found:', { hamburgerMenu, navBar });
   }
+  
+  // Add event listener for the find guest button
+  const findGuestBtn = document.getElementById('findGuestBtn');
+  if (findGuestBtn) {
+    findGuestBtn.addEventListener('click', findGuest);
+  }
+  
+  // Add event listener for the RSVP form submission
+  const rsvpForm = document.getElementById('rsvpForm');
+  if (rsvpForm) {
+    rsvpForm.addEventListener('submit', submitRSVP);
+  }
+  
+  // Add event listener for the reset form button
+  const resetFormBtn = document.getElementById('resetFormBtn');
+  if (resetFormBtn) {
+    resetFormBtn.addEventListener('click', resetForm);
+  }
 });
 
 const AIRTABLE_BASE_ID = "appwvJpPa39Qg9LDh";
@@ -53,26 +263,35 @@ let currentRSVPData = null;
 
 async function loadGuestList() {
   try {
-    const response = await fetch(AIRTABLE_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${AIRTABLE_TOKEN}`
+    let allRecords = [];
+    let offset = null;
+    
+    do {
+      const url = offset 
+        ? `${AIRTABLE_ENDPOINT}?pageSize=100&offset=${offset}`
+        : `${AIRTABLE_ENDPOINT}?pageSize=100`;
+        
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`
+        }
+      });
+      const data = await response.json();
+      
+      if (data.records) {
+        allRecords = allRecords.concat(data.records);
       }
-    });
-    const data = await response.json();
-    console.log("🔍 Debug: Raw Airtable data:", data);
+      
+      offset = data.offset;
+    } while (offset);
     
-    // Check for party 29 specifically
-    const party29Records = data.records.filter(record => 
-      record.fields["Party ID"] === 29
-    );
-    console.log("🔍 Debug: Party 29 records:", party29Records);
+    console.log("🔍 Debug: Raw Airtable data:", { records: allRecords });
+    console.log("🔍 Debug: Total records received:", allRecords.length);
     
-    guestList = processGuestRecords(data.records);
-    console.log("🔍 Debug: Processed guest list:", guestList);
+
     
-    // Check if party 29 exists in processed data
-    const party29Processed = guestList.find(party => party.partyId === 29);
-    console.log("🔍 Debug: Party 29 in processed data:", party29Processed);
+    guestList = processGuestRecords(allRecords);
+
     
     console.log("✅ Guest list loaded");
   } catch (error) {
@@ -96,19 +315,11 @@ function processGuestRecords(records) {
     const name = fields["Name"];
     const plusOneAllowed = fields["Plus One?"] || false;
     const attending = fields["Attending"];
+    const plusOneName = fields["Plus One Name"] || "";
+    const phone = fields["Phone"] || "";
     const recordId = record.id;
 
-    // Debug party 29 specifically
-    if (partyId === 29) {
-      console.log(`🔍 Debug: Party 29 record ${index}:`, {
-        partyId,
-        name,
-        plusOneAllowed,
-        attending,
-        recordId,
-        allFields: fields
-      });
-    }
+
 
     if (!parties[partyId]) {
       parties[partyId] = {
@@ -116,7 +327,9 @@ function processGuestRecords(records) {
         partyNames: [],
         plusOneAllowed,
         rsvpStatus: {},
-        recordIds: {}
+        recordIds: {},
+        plusOneName: "",
+        phone: ""
       };
     }
 
@@ -125,6 +338,13 @@ function processGuestRecords(records) {
       // Store RSVP status and record ID for each guest
       parties[partyId].rsvpStatus[name] = attending;
       parties[partyId].recordIds[name] = recordId;
+      
+      // Store plus one name and phone from the first guest in the party
+      // (assuming all guests in a party have the same plus one and phone)
+      if (parties[partyId].partyNames.length === 1) {
+        parties[partyId].plusOneName = plusOneName;
+        parties[partyId].phone = phone;
+      }
     }
 
     if (plusOneAllowed) {
@@ -137,30 +357,6 @@ function processGuestRecords(records) {
 
 function findGuest() {
   const nameInput = document.getElementById('guestName').value.trim().toLowerCase();
-  console.log("🔍 Searching for:", nameInput);
-  console.log("🔍 Available parties:", guestList.map(party => ({
-    partyId: party.partyId,
-    partyNames: party.partyNames
-  })));
-  
-  // More detailed debugging
-  guestList.forEach((party, index) => {
-    console.log(`🔍 Party ${index}:`, party.partyId, "Names:", party.partyNames);
-    party.partyNames.forEach(name => {
-      console.log(`  - "${name.toLowerCase()}" includes "${nameInput}":`, name.toLowerCase().includes(nameInput));
-    });
-  });
-  
-  // Search specifically for Matt and Archie
-  const mattParty = guestList.find(party => 
-    party.partyNames.some(name => name.toLowerCase().includes('matt'))
-  );
-  const archieParty = guestList.find(party => 
-    party.partyNames.some(name => name.toLowerCase().includes('archie'))
-  );
-  
-  console.log("🔍 Party with Matt:", mattParty);
-  console.log("🔍 Party with Archie:", archieParty);
   
   // Try exact match first, then partial match
   matchedParty = guestList.find(party =>
@@ -243,6 +439,32 @@ function findGuest() {
     }).join("");
 
     plusOneContainer.style.display = matchedParty.plusOneAllowed ? "block" : "none";
+    
+    // Auto-populate plus one name and phone if RSVP is confirmed
+    if (hasRSVPed) {
+      const plusOneInput = document.getElementById('plusOneName');
+      const phoneInput = document.getElementById('phone');
+      
+      if (plusOneInput && matchedParty.plusOneName) {
+        plusOneInput.value = matchedParty.plusOneName;
+      }
+      
+      if (phoneInput && matchedParty.phone) {
+        phoneInput.value = matchedParty.phone;
+      }
+      
+      // Update the RSVP form button text
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.textContent = 'Update RSVP';
+      }
+    } else {
+      // Reset button text for new RSVPs
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.textContent = 'Review RSVP';
+      }
+    }
   } else {
     result.textContent = "Sorry, we couldn't find your name. Please check spelling.";
     form.style.display = "none";
@@ -255,7 +477,7 @@ function checkPartyRSVPStatus(party) {
 }
 
 
-function showConfirmation(event) {
+function submitRSVP(event) {
   event.preventDefault();
   
   const formData = new FormData(document.getElementById('rsvpForm'));
@@ -273,43 +495,34 @@ function showConfirmation(event) {
     currentRSVPData.responses[name] = formData.get(name);
   });
 
-  // Display confirmation details
-  const confirmationDetails = document.getElementById('confirmationDetails');
-  let detailsHTML = '<div class="confirmation-summary">';
-  
-  // Guest responses
-  detailsHTML += '<h3>Guest Responses:</h3>';
-  matchedParty.partyNames.forEach(name => {
-    const response = currentRSVPData.responses[name];
-    const statusClass = response === 'Yes' ? 'attending' : 'not-attending';
-    detailsHTML += `<p><strong>${name}:</strong> <span class="${statusClass}">${response}</span></p>`;
-  });
+  // Submit directly to Airtable
+  confirmAndSubmit();
+}
 
-  // Plus one information
-  if (matchedParty.plusOneAllowed && currentRSVPData.plusOneName) {
-    detailsHTML += `<p><strong>Plus One:</strong> ${currentRSVPData.plusOneName}</p>`;
-  }
-
-  // Contact information
-  detailsHTML += '<h3>Contact Information:</h3>';
-  if (currentRSVPData.phone) {
-    detailsHTML += `<p><strong>Phone:</strong> ${currentRSVPData.phone}</p>`;
-  }
-
-  detailsHTML += '</div>';
-
-  confirmationDetails.innerHTML = detailsHTML;
-
-  // Show confirmation screen, hide form
+function showConfirmationScreen() {
+  // Hide the RSVP form
   document.getElementById('rsvpForm').style.display = 'none';
+  
+  // Get the first name of the primary guest
+  const primaryGuestName = matchedParty.partyNames[0];
+  const firstName = primaryGuestName.split(' ')[0];
+  
+  // Create personalized thank you message
+  const confirmationMessage = document.getElementById('confirmationMessage');
+  const messageHTML = `
+    <div class="thank-you-message">
+      <h2>Thank you, ${firstName}.</h2>
+      <p>Please reach out if you have any questions.</p>
+    </div>
+  `;
+  
+  confirmationMessage.innerHTML = messageHTML;
+
+  // Show confirmation screen
   document.getElementById('confirmationScreen').style.display = 'block';
 }
 
-function editRSVP() {
-  // Hide confirmation screen, show form
-  document.getElementById('confirmationScreen').style.display = 'none';
-  document.getElementById('rsvpForm').style.display = 'block';
-}
+
 
 async function confirmAndSubmit() {
   if (!currentRSVPData) {
@@ -325,9 +538,8 @@ async function confirmAndSubmit() {
     id: matchedParty.recordIds[name],
     fields: {
       "Attending": currentRSVPData.responses[name],
-      "Responded": "Yes",
-      "Phone": currentRSVPData.phone || "",
-      "Plus One": currentRSVPData.plusOneName || ""
+      "Plus One Name": currentRSVPData.plusOneName || "",
+      "Phone": currentRSVPData.phone || ""
     }
   }));
 
@@ -358,9 +570,8 @@ async function confirmAndSubmit() {
     // Reload the guest list to reflect the updated status
     await loadGuestList();
     
-    // Show success message
-    document.getElementById('confirmationScreen').style.display = 'none';
-    document.getElementById('successMessage').style.display = 'block';
+    // Show confirmation screen with RSVP details
+    showConfirmationScreen();
   } catch (error) {
     console.error("❌ Failed to update RSVP:", error);
     console.error("❌ Error details:", error.message);

@@ -27,20 +27,20 @@
     <div class="rsvp-header">
       <h1>RSVP</h1>
       <div class="rsvp-info">
-        <p>RSVP by October 15th</p>
-        <p>If you have any problems finding your RSVP, please text us!</p>
+        <p>RSVP by <i>October 15th</i><br />
+        If you have any problems finding your RSVP, please text us!</p>
       </div>
     </div>
     
     <div class="rsvp-container">
       <div id="lookup">
-        <p class="lookup-prompt">Enter your name to find your invitation</p>
+        <p class="lookup-prompt">Enter your full name to find your invitation</p>
         <input type="text" id="guestName" placeholder="Your name">
-        <button onclick="findGuest()">FIND MY INVITATION</button>
+        <button id="findGuestBtn">FIND MY INVITATION</button>
         <p id="lookupResult"></p>
       </div>
       
-      <form id="rsvpForm" style="display:none;" onsubmit="showConfirmation(event)">
+      <form id="rsvpForm" style="display:none;">
         <div id="rsvpStatus" class="rsvp-status"></div>
         <div id="guestOptions"></div>
 
@@ -53,25 +53,22 @@
           <label for="phone">Phone:</label>
           <input type="tel" id="phone" name="phone">
         </div>
-        <button type="submit">Review RSVP</button>
+        <button type="submit">Submit RSVP</button>
       </form>
     </div>
 
+
+
     <!-- Confirmation Screen -->
     <div id="confirmationScreen" style="display:none;">
-      <h2>Please Review Your RSVP</h2>
-      <div id="confirmationDetails"></div>
-      <div class="confirmation-buttons">
-        <button onclick="editRSVP()" class="edit-btn">Edit RSVP</button>
-        <button onclick="confirmAndSubmit()" class="confirm-btn">Confirm & Submit</button>
-      </div>
+      <div id="confirmationMessage"></div>
     </div>
 
     <!-- Success Message -->
     <div id="successMessage" style="display:none;">
       <h2>Thank You!</h2>
       <p>Your RSVP has been successfully submitted. We look forward to celebrating with you!</p>
-      <button onclick="resetForm()" class="reset-btn">RSVP for Another Guest</button>
+      <button id="resetFormBtn" class="reset-btn">RSVP for Another Guest</button>
     </div>
   </main>
   

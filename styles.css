@@ -70,6 +70,12 @@ nav {
   padding: 0.5rem;
   gap: 4px;
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .hamburger-menu span {
@@ -1660,6 +1666,9 @@ footer {
 @media (max-width: 600px) {
   .hamburger-menu {
     display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
   }
 
   .nav-container {

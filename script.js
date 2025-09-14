@@ -173,17 +173,21 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Mobile menu elements found:', { hamburgerMenu, navBar });
   
   if (hamburgerMenu && navBar) {
-    hamburgerMenu.addEventListener('click', function(e) {
+    function toggleMenu(e) {
       e.preventDefault();
       e.stopPropagation();
-      console.log('Hamburger menu clicked');
+      console.log('Hamburger menu clicked/touched');
       hamburgerMenu.classList.toggle('active');
       navBar.classList.toggle('active');
       console.log('Menu classes after toggle:', {
         hamburgerActive: hamburgerMenu.classList.contains('active'),
         navActive: navBar.classList.contains('active')
       });
-    });
+    }
+    
+    // Add both click and touchstart events for better mobile support
+    hamburgerMenu.addEventListener('click', toggleMenu);
+    hamburgerMenu.addEventListener('touchstart', toggleMenu);
     
     // Close menu when clicking on a link
     const navLinks = navBar.querySelectorAll('a');

@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+  ,-==-,
+     \/\/\/
+      \\//
+     .-''-.
+   .'.-""-.'.---.
+  / /    .'\ \--.'.
+ | |   / /| |   \ \
+ \ \  | | / /    | |
+  '.'-:\ \.'    / /
+    '---; '-..-'.'
+          `'----'
+  
+  Allan & Jessica. 12-31-25
+  Made with love for our special day 💕
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,6 +35,7 @@
         <li><a href="index.html">Wedding</a></li>
         <li><a href="hotels.html">Hotels</a></li>
         <li><a href="rsvp.html">RSVP</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="registry.html">Registry</a></li>
       </ul>
     </div>
@@ -32,7 +49,7 @@
         <h1>RSVP</h1>
       </div>
       <div class="rsvp-info">
-        <p>RSVP by <i>October 15th</i><br />
+        <p>RSVP by <i>October 20th</i><br />
         If you have any problems finding your RSVP, please text us!</p>
       </div>
     </div>
@@ -50,7 +67,7 @@
         <div id="guestOptions"></div>
 
         <div id="plusOneContainer" style="display:none;">
-          <label for="plusOneName">Plus One Name:</label>
+          <label for="plusOneName">Your plus one's name (leave blank if you're not bringing anyone):</label>
           <input type="text" id="plusOneName" name="plusOneName">
         </div>
 
@@ -87,6 +104,22 @@
   <script>
     window.addEventListener("DOMContentLoaded", () => {
       loadGuestList();
+      
+      // Add event listener for Enter key on guest name input
+      const guestNameInput = document.getElementById('guestName');
+      if (guestNameInput) {
+        console.log('Adding Enter key listener to guest name input');
+        guestNameInput.addEventListener('keydown', (e) => {
+          console.log('Key pressed:', e.key);
+          if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent form submission if this is inside a form
+            console.log('Enter key detected, calling findGuest()');
+            findGuest();
+          }
+        });
+      } else {
+        console.error('Guest name input not found');
+      }
     });
   </script>
 </body>

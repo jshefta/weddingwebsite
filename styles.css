@@ -781,6 +781,7 @@ h2 .ampersand {
   display: flex;
   flex-direction: column;
   text-align: center;
+  gap: 1rem;
 }
 
 #plusOneContainer {
@@ -810,11 +811,11 @@ h2 .ampersand {
 
 #rsvpForm input, #rsvpForm select {
   width: 100%;
-  height: 80px;
-  max-width: 100%;
+  height: 50px;
+  max-width: 400px;
   padding: 0.75rem;
   border: 1px solid var(--color-border);
-  font-size: 32px;
+  font-size: 16px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -842,7 +843,6 @@ h2 .ampersand {
 /* RSVP Header */
 .rsvp-header {
   text-align: center;
-  margin-bottom: 3rem;
   margin-top: 4rem;
   position: relative;
   display: flex;
@@ -851,16 +851,68 @@ h2 .ampersand {
   width: 100%;
 }
 
-/* Registry Header */
-.registry-header {
+/* === Registry Styles === */
+.registry-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 2rem;
   text-align: center;
-  margin-bottom: 3rem;
-  margin-top: 4rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+}
+
+.registry-container p {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-white);
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+.registry-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 24px;
+  text-transform: uppercase;
+  border: 2px solid var(--color-white);
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.registry-link:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Responsive registry styles */
+@media (max-width: 700px) {
+  .registry-container {
+    padding: 0 1rem;
+  }
+  
+  .registry-container p {
+    font-size: 14px;
+  }
+  
+  .registry-link {
+    font-size: 20px;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .registry-container p {
+    font-size: 13px;
+  }
+  
+  .registry-link {
+    font-size: 18px;
+    padding: 0.7rem 1.2rem;
+  }
 }
 
 .chinese-badge {
@@ -883,6 +935,7 @@ h2 .ampersand {
   margin-top: 1rem;
   font-size: 24px;
   line-height: 1.5;
+  text-align: center;
 }
 
 .rsvp-info p {
@@ -893,8 +946,8 @@ h2 .ampersand {
 
 /* Custom styling for RSVP page sticker */
 .rsvp-header .sticker {
-  left: 830px;
-  top: -10px;
+  left: 900px;
+  top: 20px;
   transform: rotate(15deg);
   width: 162px;
 }
@@ -906,8 +959,8 @@ h2 .ampersand {
 /* Responsive styles for RSVP sticker */
 @media (max-width: 1200px) {
   .rsvp-header .sticker {
-    left: 650px;
-    top: -8px;
+    left: 720px;
+    top: 15px;
     width: 140px;
   }
   
@@ -918,8 +971,8 @@ h2 .ampersand {
 
 @media (max-width: 900px) {
   .rsvp-header .sticker {
-    left: 500px;
-    top: -5px;
+    left: 570px;
+    top: 10px;
     width: 120px;
     transform: rotate(12deg);
   }
@@ -931,8 +984,8 @@ h2 .ampersand {
 
 @media (max-width: 700px) {
   .rsvp-header .sticker {
-    left: 350px;
-    top: -3px;
+    left: 420px;
+    top: 8px;
     width: 100px;
     transform: rotate(10deg);
   }
@@ -944,8 +997,8 @@ h2 .ampersand {
 
 @media (max-width: 500px) {
   .rsvp-header .sticker {
-    left: 250px;
-    top: -2px;
+    left: 320px;
+    top: 5px;
     width: 80px;
     transform: rotate(8deg);
   }
@@ -957,8 +1010,8 @@ h2 .ampersand {
 
 @media (max-width: 400px) {
   .rsvp-header .sticker {
-    left: 180px;
-    top: -1px;
+    left: 250px;
+    top: 3px;
     width: 70px;
     transform: rotate(5deg);
   }
@@ -1385,6 +1438,93 @@ h2 .ampersand {
 @media (max-width: 400px) {
   .footer-divider {
     margin: 40px auto 20px auto;
+  }
+}
+
+/* === FAQ Styles === */
+.faq-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.faq-item {
+  margin-bottom: 0;
+  padding: 2rem 0;
+  border-bottom: 1px solid #666666;
+}
+
+.faq-item:first-child {
+  border-top: 1px solid #666666;
+}
+
+.faq-item h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin: 0 0 1rem 0;
+  text-align: left;
+}
+
+.faq-item p {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-white);
+  margin: 0 0 1rem 0;
+  text-align: left;
+}
+
+.faq-item p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-item ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.faq-item li {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive FAQ styles */
+@media (max-width: 700px) {
+  .faq-container {
+    padding: 0 1rem;
+  }
+  
+  .faq-item {
+    padding: 1.5rem 0;
+  }
+  
+  .faq-item h3 {
+    font-size: 20px;
+  }
+  
+  .faq-item p,
+  .faq-item li {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  .faq-item {
+    padding: 1rem 0;
+  }
+  
+  .faq-item h3 {
+    font-size: 18px;
+  }
+  
+  .faq-item p,
+  .faq-item li {
+    font-size: 13px;
   }
 }
 

@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     findGuestBtn.addEventListener('click', findGuest);
   }
   
+  
   // Add event listener for the RSVP form submission
   const rsvpForm = document.getElementById('rsvpForm');
   if (rsvpForm) {
@@ -513,12 +514,14 @@ async function confirmAndSubmit() {
     fields: {
       "Attending": currentRSVPData.responses[name],
       "Plus One Name": currentRSVPData.plusOneName || "",
-      "Phone": currentRSVPData.phone || ""
+      "Phone": currentRSVPData.phone || "",
+      "Responded": "Yes"
     }
   }));
 
   console.log("🔍 Debug: Records to update:", records);
   console.log("🔍 Debug: Request body:", JSON.stringify({ records }, null, 2));
+  console.log("🔍 Debug: Field names being updated:", Object.keys(records[0].fields));
 
   try {
     console.log("🔍 Debug: Making PATCH request to:", AIRTABLE_ENDPOINT);
@@ -536,8 +539,10 @@ async function confirmAndSubmit() {
 
     const result = await response.json();
     console.log("✅ RSVP updated:", result);
+    console.log("🔍 Debug: Response data:", JSON.stringify(result, null, 2));
     
     if (!response.ok) {
+      console.error("❌ Airtable API Error:", result);
       throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
     }
     

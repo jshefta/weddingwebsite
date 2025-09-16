@@ -441,7 +441,7 @@ function findGuest() {
       // Reset button text for new RSVPs
       const submitButton = form.querySelector('button[type="submit"]');
       if (submitButton) {
-        submitButton.textContent = 'Review RSVP';
+        submitButton.textContent = 'Submit RSVP';
       }
     }
   } else {

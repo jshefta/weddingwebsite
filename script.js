@@ -424,17 +424,12 @@ function findGuest() {
 
     plusOneContainer.style.display = matchedParty.plusOneAllowed ? "block" : "none";
     
-    // Auto-populate plus one name and phone if RSVP is confirmed
+    // Auto-populate plus one name if RSVP is confirmed
     if (hasRSVPed) {
       const plusOneInput = document.getElementById('plusOneName');
-      const phoneInput = document.getElementById('phone');
       
       if (plusOneInput && matchedParty.plusOneName) {
         plusOneInput.value = matchedParty.plusOneName;
-      }
-      
-      if (phoneInput && matchedParty.phone) {
-        phoneInput.value = matchedParty.phone;
       }
       
       // Update the RSVP form button text
@@ -470,7 +465,6 @@ function submitRSVP(event) {
     partyNames: matchedParty.partyNames,
     plusOneAllowed: matchedParty.plusOneAllowed,
     plusOneName: formData.get("plusOneName") || "",
-    phone: formData.get("phone"),
     responses: {}
   };
 
@@ -523,7 +517,6 @@ async function confirmAndSubmit() {
     fields: {
       "Attending": currentRSVPData.responses[name],
       "Plus One Name": currentRSVPData.plusOneName || "",
-      "Phone": currentRSVPData.phone || "",
       "Responded": "Yes"
     }
   }));

@@ -50,7 +50,7 @@ function showPasswordPrompt() {
 
   
   const passwordLabel = document.createElement('p');
-  passwordLabel.textContent = 'INPUT YOUR PASSWORD';
+  passwordLabel.textContent = 'Enter your password';
   passwordLabel.style.cssText = `
     margin: 0 0 15px 0;
     color: #ffffff;
@@ -160,13 +160,8 @@ function showPasswordPrompt() {
   passwordInput.focus();
 }
 
-// Check password on page load
-document.addEventListener('DOMContentLoaded', function() {
-  if (!checkPassword()) {
-    return; // Stop execution if not authenticated
-  }
-  
-  // Mobile menu functionality
+// Initialize mobile menu functionality immediately
+function initializeMobileMenu() {
   const hamburgerMenu = document.getElementById('hamburgerMenu');
   const navBar = document.getElementById('navBar');
   
@@ -208,6 +203,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   } else {
     console.error('Mobile menu elements not found:', { hamburgerMenu, navBar });
+  }
+}
+
+// Check password on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize mobile menu functionality immediately, regardless of password status
+  initializeMobileMenu();
+  
+  if (!checkPassword()) {
+    return; // Stop execution if not authenticated
   }
   
   // Add event listener for the find guest button
